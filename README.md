@@ -120,3 +120,100 @@ TestMode.super.show()
 这个其实跟java语言中设计抽象类和接口的区别是大同小异的，抽象类还是在类的层面上来看问题的，具有自己的构造方法和成员变量和成员方法，是在类的基础上的一种抽象，日常项目开发中把我们需要的一些通用方法尽量上移，把一些需要不同实现的方法，也上移，这个时候我们使用抽象类，就可以很好的来解决这个问题，接口可以理解为对行为的一种抽象，对一类行为的（方法）的抽象，接口的设计是为了解耦的，单独的依靠抽象类，并不能将定义和实现很好的分离开来，一味的在抽象类中新加含有具体实现的方法，其实是对不需要该方法的子类的一种污染，一味的新加抽象方法，也需要对子类不断的更改，这个时候我们使用接口来定义这种行为，在需要的子类中实现该接口，就可以很好的处理这个问题。
 
 Kotlin设计接口是为我们提供一种将接口和实现分离的更加结构化的方法。抽象类是接口和普通类之间的一种中庸之道，但是两者都有其存在的意义。抽象类和接口在设计模式以及解耦方面有着不可替代的作用。这也是大部分面向对象的语言都有抽象类和接口设计的原因，也是为了弥补无法多重继承的遗憾。
+
+# Dart中的抽象类和接口
+### 抽象类和接口
+Dart也是一门面向对象的语言，关于Dart的历史，这里不再详细叙述，作为google内部孵化的语言，如今已成为Flutter框架的指定官方语言。
+
+个人看来，所有面向对象的语言，都抛不开抽象类和接口，这是面向对象语言所具有的通性。
+
+<font color="#dd000">**Dart中的抽象类和接口：** </font>
+
+<font color="#dd0000">**定义上：**</font>
+
+ Dart中定义抽象类，也是采用abstract关键字，只要类里有抽象方法，该类就得使用抽象的关键字，Dart中的抽象方法，不用abstract关键字形容。这个是区别于java的，java中抽象类里的抽象方法必须用abstract关键字修饰。
+
+~~~dart
+//Dart中的抽象类
+abstract class Person{
+  getName();
+  getAge();//并不需要abstract关键字修饰
+}
+//java 中的抽象类
+public abstract class Show {
+    void showSomething() {
+    }
+    abstract void eat();//注意这个方法 是有abstract 关键字修饰的
+}
+~~~
+
+<font color="#dd0000">使用上:</font>
+
+Dart中子类使用抽象类，可以用关键字 extends来继承，这里子类要实现抽象类里的抽象方法。Dart中的抽象类也不可以实例化，可以实例化它的子类。
+
+<font color="#dd0000"> 注意点: </font>
+
+Dart中并没有interface一说，java中所谓的接口在Dart中的表现仍是抽象类，抽象类可以被继承，也可以被实现，继承的话，子类需要实现父类中的抽象方法，实现的话，这里是有区别的，子类必须得实现抽象类的属性和方法
+
+~~~dart
+abstract class Animal{
+   int a=2;
+   void eat(){
+   }
+   void drink(){
+   }
+   void say();
+}
+
+class Dog implements Animal{
+  @override
+  int a;
+
+  @override
+  void drink() {
+    // TODO: implement drink
+  }
+
+  @override
+  void eat() {
+    // TODO: implement eat
+  }
+
+  @override
+  void say() {
+    // TODO: implement say
+  }
+  
+}
+~~~
+
+<font color="#dd0000">**Dart中的with** </font>
+
+这里个人认为这是Dart中为了实现类似C++那种的多继承机制而引进的关键字。
+
+如果子类要同时使用 extends with implements，这里的顺序是这样的 先extends 然后再with 最后implements
+
+~~~Dart
+abstract class Animal {
+  int a = 2;
+
+  void eat() {}
+
+  void drink() {}
+
+  void say();
+}
+
+class Show {}
+
+abstract class Fly {}
+
+class Bird extends Animal with Show implements Fly {
+  @override
+  void say() {
+    // TODO: implement say
+  }
+}
+~~~
+
+
